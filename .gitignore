@@ -21,3 +21,6 @@
 
 #keeps readme
 !README.md
+
+#keeps license
+!LICENSE
