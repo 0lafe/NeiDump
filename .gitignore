@@ -1,5 +1,20 @@
+#Ignores most outputs
 /*
+
+#keeps git ignore
+!.gitignore
+
+#Keeps java source
 !/src
 !/src/main
-!.gitignore
+
+#keeps gradle configs
+!addon.gradle
 !build.gradle
+!dependencies.gradle
+!gradle.properties
+!gradlew
+!gradlew.bat
+!jitpack.yml
+!LICENSE-template
+!repositories.gradle

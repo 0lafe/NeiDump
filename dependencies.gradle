@@ -1,0 +1,12 @@
+// Add your dependencies here
+
+dependencies {
+    compile("com.github.GTNewHorizons:CodeChickenLib:master-SNAPSHOT:dev")
+    compile("com.github.GTNewHorizons:CodeChickenCore:master-SNAPSHOT:dev")
+	compile "codechicken:NotEnoughItems:1.7.10-1.0.5.120:dev"
+    shade group: 'org.json', name: 'json', version: '20180813'
+    compile "com.github.GTNewHorizons:StructureLib:master-SNAPSHOT:dev"
+    compile("net.industrial-craft:industrialcraft-2:2.2.828-experimental:dev")
+    compile("com.github.GTNewHorizons:GT5-Unofficial:master-SNAPSHOT:dev")
+    compile("thaumcraft:Thaumcraft:1.7.10-4.2.3.5:dev")
+}

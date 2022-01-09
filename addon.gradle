@@ -1,0 +1,4 @@
+configurations {
+    shade
+    compile.extendsFrom shade
+}
