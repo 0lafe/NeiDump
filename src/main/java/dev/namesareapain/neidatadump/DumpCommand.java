@@ -78,7 +78,7 @@ public class DumpCommand extends CommandBase {
         if(argList.contains("g") || argList.contains("GUI")){
             sender.addChatMessage( new ChatComponentText("Exporting GUIs"));
             System.out.println("Exporting GUIs");
-            sender.addChatMessage( new ChatComponentText(ExportData.exportGUIs()));
+            sender.addChatMessage( new ChatComponentText(ExportData.exportGUIs(sender)));
         }
         System.out.println("Done Exporting");
         sender.addChatMessage( new ChatComponentText("Done Exporting"));

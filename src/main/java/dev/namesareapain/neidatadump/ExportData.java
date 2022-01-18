@@ -5,6 +5,7 @@ import codechicken.nei.recipe.ICraftingHandler;
 import codechicken.nei.recipe.TemplateRecipeHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.IResource;
+import net.minecraft.command.ICommandSender;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.ResourceLocation;
 import org.json.JSONArray;
@@ -134,8 +135,9 @@ public class ExportData {
                 );
     }
 
-    public static String exportGUIs(){
-        new File("gui_bg").mkdirs();
+    public static String exportGUIs(ICommandSender sender){
+        new File("dumps").mkdirs();
+        new File("dumps/guis").mkdirs();
         long i = 0;
         long j = 0;
         for (ICraftingHandler handler : craftinghandlers) {
@@ -148,11 +150,13 @@ public class ExportData {
                     int dotLoc = templateRecipeHandler.getGuiTexture().lastIndexOf('.');
                     String ext = dotLoc < 0 ? "" : templateRecipeHandler.getGuiTexture().substring(dotLoc);
 //                    Files.copy(resource.getInputStream(), Paths.get("gui_bg", templateRecipeHandler.getHandlerId() + ext));
-                    Files.copy(resource.getInputStream(), Paths.get("gui_bg", templateRecipeHandler.getRecipeName() + ext));
+                    Files.copy(resource.getInputStream(), Paths.get("dumps/guis",  templateRecipeHandler.getRecipeName() + ext));
                 }
             } catch (Exception e) {
+//                HEYO BIGGUY
 //                System.out.println("Handler " + handler.getHandlerId() + " has a null or invalid GuiTexture declared!");
-                System.out.println("Handler " + handler.getRecipeName() + " has a null or invalid GuiTexture declared!");
+                System.out.println(handler.getRecipeName() + " aka " + handler.getHandlerId() + " failed");
+                sender.addChatMessage( new ChatComponentText(handler.getRecipeName() + " aka " + handler.getHandlerId() + " failed"));
                 j++;
             }
         }
