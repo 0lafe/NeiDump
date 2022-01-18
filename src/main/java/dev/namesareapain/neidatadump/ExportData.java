@@ -147,11 +147,12 @@ public class ExportData {
                     IResource resource = Minecraft.getMinecraft().getResourceManager().getResource(new ResourceLocation(templateRecipeHandler.getGuiTexture()));
                     int dotLoc = templateRecipeHandler.getGuiTexture().lastIndexOf('.');
                     String ext = dotLoc < 0 ? "" : templateRecipeHandler.getGuiTexture().substring(dotLoc);
-                    Files.copy(resource.getInputStream(), Paths.get("gui_bg", templateRecipeHandler.getHandlerId() + i + ext));
-                    System.out.println("OH SHIT THE " + templateRecipeHandler.getHandlerId() + " ACTUALLY SUCCEDDED");
+//                    Files.copy(resource.getInputStream(), Paths.get("gui_bg", templateRecipeHandler.getHandlerId() + ext));
+                    Files.copy(resource.getInputStream(), Paths.get("gui_bg", templateRecipeHandler.getRecipeName() + ext));
                 }
             } catch (Exception e) {
-                System.out.println("Handler " + handler.getHandlerId() + " has a null or invalid GuiTexture declared!");
+//                System.out.println("Handler " + handler.getHandlerId() + " has a null or invalid GuiTexture declared!");
+                System.out.println("Handler " + handler.getRecipeName() + " has a null or invalid GuiTexture declared!");
                 j++;
             }
         }
