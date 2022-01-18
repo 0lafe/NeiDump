@@ -149,14 +149,13 @@ public class ExportData {
                     IResource resource = Minecraft.getMinecraft().getResourceManager().getResource(new ResourceLocation(templateRecipeHandler.getGuiTexture()));
                     int dotLoc = templateRecipeHandler.getGuiTexture().lastIndexOf('.');
                     String ext = dotLoc < 0 ? "" : templateRecipeHandler.getGuiTexture().substring(dotLoc);
-//                    Files.copy(resource.getInputStream(), Paths.get("gui_bg", templateRecipeHandler.getHandlerId() + ext));
-                    Files.copy(resource.getInputStream(), Paths.get("dumps/guis",  templateRecipeHandler.getRecipeName() + ext));
+//                    Files.copy(resource.getInputStream(), Paths.get("dumps/guis",  templateRecipeHandler.getRecipeName() + ext));
+                    String aPath = templateRecipeHandler.getHandlerId() + "@@" + templateRecipeHandler.getRecipeName();
+                    Files.copy(resource.getInputStream(), Paths.get("dumps/guis",  aPath + ext));
                 }
             } catch (Exception e) {
-//                HEYO BIGGUY
-//                System.out.println("Handler " + handler.getHandlerId() + " has a null or invalid GuiTexture declared!");
-                System.out.println(handler.getRecipeName() + " aka " + handler.getHandlerId() + " failed");
-                sender.addChatMessage( new ChatComponentText(handler.getRecipeName() + " aka " + handler.getHandlerId() + " failed"));
+                System.out.println(handler.getRecipeName() + ":" + handler.getHandlerId() + " failed");
+                sender.addChatMessage( new ChatComponentText(handler.getRecipeName() + ":" + handler.getHandlerId() + " failed"));
                 j++;
             }
         }
