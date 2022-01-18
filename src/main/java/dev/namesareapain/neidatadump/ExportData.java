@@ -2,8 +2,17 @@ package dev.namesareapain.neidatadump;
 
 import codechicken.nei.recipe.GuiCraftingRecipe;
 import codechicken.nei.recipe.ICraftingHandler;
+import codechicken.nei.recipe.TemplateRecipeHandler;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.resources.IResource;
+import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.ResourceLocation;
 import org.json.JSONArray;
 import org.json.JSONObject;
+
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -25,6 +34,8 @@ import dev.namesareapain.neidatadump.handlerhandler.*;
 import thaumcraft.api.ThaumcraftApiHelper;
 import net.minecraftforge.oredict.OreDictionary;
 
+import static codechicken.nei.recipe.GuiCraftingRecipe.craftinghandlers;
+
 public class ExportData {
     
     public static long ITEM_COUNT = 0;
@@ -38,7 +49,7 @@ public class ExportData {
 
     public static void exportRecipes(){
         System.out.println("beginning data dump");
-        ArrayList<ICraftingHandler> neihandlers = GuiCraftingRecipe.craftinghandlers;
+        ArrayList<ICraftingHandler> neihandlers = craftinghandlers;
         JSONArray handlerdumps = new JSONArray();
         for(ICraftingHandler handler : neihandlers){
             for( IHandlerHandler handlerHandler : handlerHandlers()){
@@ -121,6 +132,31 @@ public class ExportData {
                 .put("aspects",out)
                 ,"./aspects.json"
                 );
+    }
+
+    public static String exportGUIs(){
+        new File("gui_bg").mkdirs();
+        long i = 0;
+        long j = 0;
+        for (ICraftingHandler handler : craftinghandlers) {
+            i ++;
+            try {
+                if (handler instanceof TemplateRecipeHandler) {
+                    TemplateRecipeHandler templateRecipeHandler = (TemplateRecipeHandler) handler;
+                    if (templateRecipeHandler.getGuiTexture() == null) continue;
+                    IResource resource = Minecraft.getMinecraft().getResourceManager().getResource(new ResourceLocation(templateRecipeHandler.getGuiTexture()));
+                    int dotLoc = templateRecipeHandler.getGuiTexture().lastIndexOf('.');
+                    String ext = dotLoc < 0 ? "" : templateRecipeHandler.getGuiTexture().substring(dotLoc);
+                    Files.copy(resource.getInputStream(), Paths.get("gui_bg", templateRecipeHandler.getHandlerId() + i + ext));
+                    System.out.println("OH SHIT THE " + templateRecipeHandler.getHandlerId() + " ACTUALLY SUCCEDDED");
+                }
+            } catch (Exception e) {
+                System.out.println("Handler " + handler.getHandlerId() + " has a null or invalid GuiTexture declared!");
+                j++;
+            }
+        }
+        System.out.println(j + " out of " + i + " handlers failed! ;D");
+        return (j + " out of " + i + " handlers failed! ;D");
     }
     
     

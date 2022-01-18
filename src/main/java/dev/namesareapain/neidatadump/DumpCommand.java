@@ -75,6 +75,11 @@ public class DumpCommand extends CommandBase {
             System.out.println("Exporting Ore Dictionary");
             ExportData.exportOreDict();
         }
+        if(argList.contains("g") || argList.contains("GUI")){
+            sender.addChatMessage( new ChatComponentText("Exporting GUIs"));
+            System.out.println("Exporting GUIs");
+            sender.addChatMessage( new ChatComponentText(ExportData.exportGUIs()));
+        }
         System.out.println("Done Exporting");
         sender.addChatMessage( new ChatComponentText("Done Exporting"));
         sender.addChatMessage( new ChatComponentText("This was a triumph"));
