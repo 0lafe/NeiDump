@@ -1,0 +1,39 @@
+{
+  "h": [
+    {
+      "hi": "handlerID",
+      "hn": "handlerName",
+      "r": [
+        {
+          "i": [
+            {
+              "i": {
+                "q": 1,
+                "i": {
+                  "iid": "itemID",
+                  "mid": "modID",
+                  "m": 1
+                }
+              }
+            }
+          ],
+          "o": [
+            {
+              "i": {
+                "q": 1,
+                "i": {
+                  "iid": "itemID",
+                  "mid": "modID",
+                  "m": 1
+                }
+              }
+            }
+          ],
+          "e": {
+            
+          }
+        }
+      ]
+    }
+  ]
+}

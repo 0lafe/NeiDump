@@ -53,7 +53,7 @@ public class ExportData {
         ArrayList<ICraftingHandler> neihandlers = craftinghandlers;
         JSONArray handlerdumps = new JSONArray();
         for(ICraftingHandler handler : neihandlers){
-            for( IHandlerHandler handlerHandler : handlerHandlers()){
+            for(IHandlerHandler handlerHandler : handlerHandlers()){
                 if(handlerHandler.claim(handler)){
                     try{
                         handlerdumps.put(handlerHandler.dumpRecipes(handler));
@@ -67,7 +67,7 @@ public class ExportData {
             }
         }
         JSONObject out = new JSONObject();
-        out.put("handlers",handlerdumps);
+        out.put("h",handlerdumps);
         Jsonify.writeOutput(out,"./recipes.json");
     }
 
@@ -135,13 +135,10 @@ public class ExportData {
                 );
     }
 
-    public static String exportGUIs(ICommandSender sender){
+    public static void exportGUIs(ICommandSender sender){
         new File("dumps").mkdirs();
         new File("dumps/guis").mkdirs();
-        long i = 0;
-        long j = 0;
         for (ICraftingHandler handler : craftinghandlers) {
-            i ++;
             try {
                 if (handler instanceof TemplateRecipeHandler) {
                     TemplateRecipeHandler templateRecipeHandler = (TemplateRecipeHandler) handler;
@@ -149,18 +146,14 @@ public class ExportData {
                     IResource resource = Minecraft.getMinecraft().getResourceManager().getResource(new ResourceLocation(templateRecipeHandler.getGuiTexture()));
                     int dotLoc = templateRecipeHandler.getGuiTexture().lastIndexOf('.');
                     String ext = dotLoc < 0 ? "" : templateRecipeHandler.getGuiTexture().substring(dotLoc);
-//                    Files.copy(resource.getInputStream(), Paths.get("dumps/guis",  templateRecipeHandler.getRecipeName() + ext));
                     String aPath = templateRecipeHandler.getHandlerId() + "@@" + templateRecipeHandler.getRecipeName();
                     Files.copy(resource.getInputStream(), Paths.get("dumps/guis",  aPath + ext));
                 }
             } catch (Exception e) {
                 System.out.println(handler.getRecipeName() + ":" + handler.getHandlerId() + " failed");
                 sender.addChatMessage( new ChatComponentText(handler.getRecipeName() + ":" + handler.getHandlerId() + " failed"));
-                j++;
             }
         }
-        System.out.println(j + " out of " + i + " handlers failed! ;D");
-        return (j + " out of " + i + " handlers failed! ;D");
     }
     
     
