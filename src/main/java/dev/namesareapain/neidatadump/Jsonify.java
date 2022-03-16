@@ -15,6 +15,7 @@ import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Item;
 import net.minecraft.block.Block;
+import net.minecraft.nbt.NBTTagCompound;
 
 import thaumcraft.api.aspects.AspectList;
 import thaumcraft.api.aspects.Aspect;
@@ -60,9 +61,16 @@ public class Jsonify {
     }
 
     public static JSONObject itemStack(ItemStack stack){
-        return new JSONObject()
-           .put("item", item(stack))      
-           .put("count", stack.stackSize);
+        if(stack.getTagCompound() != null && stack.getTagCompound().hasKey("mFluidDisplayAmount")){ // big bad hardcoded string
+            return new JSONObject()
+                .put("item", item(stack))
+                .put("count",  stack.getTagCompound().getLong("mFluidDisplayAmount"));
+        }else
+        { 
+            return new JSONObject() // keep old functionality 
+                .put("item", item(stack))
+                .put("count", stack.stackSize);
+        }
     }
 
     public static JSONObject item(Item item_obj){
