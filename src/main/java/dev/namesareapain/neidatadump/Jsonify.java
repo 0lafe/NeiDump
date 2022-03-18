@@ -25,7 +25,7 @@ public class Jsonify {
     public static void writeOutput(JSONObject output,String filename){
         try {
             PrintWriter writer = new PrintWriter(filename, "UTF-8");
-            writer.println(output.toString(2));
+            writer.println(output.toString());
             writer.close();
         } catch (Exception e){System.out.println(e.toString());}
     }
