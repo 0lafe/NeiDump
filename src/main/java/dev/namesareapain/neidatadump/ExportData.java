@@ -7,6 +7,7 @@ import org.json.JSONObject;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.io.PrintWriter;
 import codechicken.nei.PositionedStack;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Item;
@@ -37,26 +38,32 @@ public class ExportData {
     }
 
     public static void exportRecipes(){
-        System.out.println("beginning data dump");
+        System.out.println("Beginning Data Dump");
         ArrayList<ICraftingHandler> neihandlers = GuiCraftingRecipe.craftinghandlers;
-        JSONArray handlerdumps = new JSONArray();
-        for(ICraftingHandler handler : neihandlers){
-            for( IHandlerHandler handlerHandler : handlerHandlers()){
-                if(handlerHandler.claim(handler)){
-                    try{
-                        handlerdumps.put(handlerHandler.dumpRecipes(handler));
-                    } catch (Exception e){
-                        System.out.println("Failed to process Handler:" +
-                                handler.getRecipeName()
-                                );
+        
+        try {
+            PrintWriter writer = new PrintWriter("./recipes.json", "UTF-8"); // Create a file writer
+            writer.println("{\"handlers\": [");
+            for(ICraftingHandler handler : neihandlers){
+                for( IHandlerHandler handlerHandler : handlerHandlers()){
+                    if(handlerHandler.claim(handler)){
+                        try{
+                            writer.print(handlerHandler.dumpRecipes(handler).toString()); 
+                            if (handler.getRecipeName() != ""){ // only occurs on the last hopefully
+                                writer.println(",");
+                            }
+                        } catch (Exception e){
+                            System.out.println("Failed to process Handler:" + handler.getRecipeName() );
+                        }
+                        break;
                     }
-                    break;
                 }
             }
+            writer.println("]}");
+            writer.close();
+        } catch (Exception e){
+            System.out.println(e.toString());
         }
-        JSONObject out = new JSONObject();
-        out.put("handlers",handlerdumps);
-        Jsonify.writeOutput(out,"./recipes.json");
     }
 
     public static void exportItems(){

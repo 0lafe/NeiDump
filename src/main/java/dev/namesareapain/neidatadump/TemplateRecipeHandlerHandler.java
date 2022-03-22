@@ -66,7 +66,7 @@ public class TemplateRecipeHandlerHandler implements IHandlerHandler {
                             )
                         );
             } catch (NullPointerException e){
-                System.out.println("Null item");
+                // System.out.println("Null item"); // Bloat
             }
         }
         JSONObject out = new JSONObject();
