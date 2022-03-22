@@ -48,7 +48,7 @@ public class GT_NEI_DefaultHandlerHandler implements IHandlerHandler {
                                 recipe.getOtherStacks()
                                 )
                             )
-                        .put("info",dumpExtras(recipe))
+                        .put("extras",dumpExtras(recipe))
                         );
             } catch (Exception e){
                 System.out.println("Failed to export gregtech recipe");
@@ -57,7 +57,8 @@ public class GT_NEI_DefaultHandlerHandler implements IHandlerHandler {
         JSONObject out = new JSONObject();
         out.put("recipes", recipes);
         out.put("Gregtech",true);
-        out.put("handler", handler.getRecipeName());
+        out.put("handlerName", handler.getRecipeName());
+        out.put("handlerID", handler.getHandlerId());
         return out;
     }
 
