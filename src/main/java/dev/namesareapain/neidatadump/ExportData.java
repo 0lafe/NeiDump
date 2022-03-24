@@ -44,7 +44,7 @@ public class ExportData {
         try {
             PrintWriter writer = new PrintWriter("./recipes.json", "UTF-8"); // Create a file writer
             writer.println("{\"handlers\": [");
-            for(int i = 0; i < neihandlers.size(); i++){ //ICraftingHandler handler : neihandlers){
+            for(int i = 0; i < neihandlers.size(); i++){ 
                 ICraftingHandler handler = neihandlers.get(i);
                 for( IHandlerHandler handlerHandler : handlerHandlers()){
                     if(handlerHandler.claim(handler)){
