@@ -70,9 +70,9 @@ public class TemplateRecipeHandlerHandler implements IHandlerHandler {
             }
         }
         JSONObject out = new JSONObject();
-        out.put("recipes", recipes);
-        out.put("handlerName", handler.getRecipeName());
-        out.put("handlerID", handler.getHandlerId());
+        out.put("r", recipes);
+        out.put("hn", handler.getRecipeName());
+        out.put("hi", handler.getClass().getName());
         return out;
     }
 }
