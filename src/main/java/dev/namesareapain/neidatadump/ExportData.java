@@ -44,12 +44,13 @@ public class ExportData {
         try {
             PrintWriter writer = new PrintWriter("./recipes.json", "UTF-8"); // Create a file writer
             writer.println("{\"handlers\": [");
-            for(ICraftingHandler handler : neihandlers){
+            for(int i = 0; i < neihandlers.size(); i++){ 
+                ICraftingHandler handler = neihandlers.get(i);
                 for( IHandlerHandler handlerHandler : handlerHandlers()){
                     if(handlerHandler.claim(handler)){
                         try{
                             writer.print(handlerHandler.dumpRecipes(handler).toString()); 
-                            if (handler.getRecipeName() != ""){ // only occurs on the last hopefully
+                            if ( i < neihandlers.size() - 1){ 
                                 writer.println(",");
                             }
                         } catch (Exception e){
